@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Swapnanil Saha, Geospatial Analyst. GeoAI, hazard and utility GIS portfolio with four live dashboards.">
+<meta property="og:title" content="Swapnanil Saha | Geospatial Analyst">
+<meta property="og:description" content="GeoAI, hazard and utility GIS portfolio: water stress, GLOF risk, gas asset management and emergency accessibility, each with a live dashboard.">
+<meta property="og:image" content="https://swapnanilsaha-gis.github.io/portrait.jpg">
+<meta property="og:url" content="https://swapnanilsaha-gis.github.io/">
+<meta name="twitter:card" content="summary">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Swapnanil Saha | Geospatial Analyst</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: navy atlas cover with portrait and live coordinates, a row of coloured KPI tiles, then four colour-coded project plates (blue water, teal glacier, amber gas, red emergency), each with KPI boxes, brief and to-scale charts. */
+:root{
+  --paper:#eef2f6; --sheet:#ffffff; --ink:#15202b; --soft:#4f5d6b; --rule:#d3dbe3; --hair:#e6ebf0;
+  --navy:#e7f0f9; --navy-2:#ffffff; --on-dark:#15202b; --on-dark-soft:#4f5d6b;
+  --p1:#2f679f; --p2:#2e8277; --p3:#c47a33; --p4:#b04a42; --gold:#e3b54a;
+  color-scheme:light;
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.55 var(--serif)}
+a{color:var(--p1);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+h1,h2,h3,h4{font-family:var(--display);font-stretch:108%;font-weight:700;text-wrap:balance;margin:0;line-height:1.1}
+.num{font-variant-numeric:tabular-nums lining-nums}
+strong.num,.roman,.pn,.kpi strong,.pkpis strong{font-family:var(--display);font-stretch:112%;letter-spacing:-.01em}
+.btn,.tag span,.stack span,.chips span,.flow span,.medal,.head,.brief dt,.row .k,.index .pt,.chart .note,.where{font-family:var(--display)}
+.readout,.inset .url,#coord{font-family:var(--mono);font-size:.86rem}
+#email,#phone{font-family:var(--mono);font-size:1rem}
+
+/* Running head */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--sheet)}
+.head{position:sticky;top:env(safe-area-inset-top, 0px);z-index:9;background:var(--sheet);color:var(--on-dark);border-bottom:1px solid var(--rule);box-shadow:0 3px 0 -1px transparent}
+.head::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:3px;background:linear-gradient(90deg,var(--p1) 0 25%,var(--p2) 25% 50%,var(--p3) 50% 75%,var(--p4) 75%)}
+.head .wrap{display:flex;align-items:center;gap:22px;min-height:54px}
+.head .who{font-weight:700;white-space:nowrap;font-size:1.05rem}
+.head nav{display:flex;gap:20px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.head nav a{color:var(--on-dark-soft);text-decoration:none;white-space:nowrap;font-size:1rem;padding-block:4px;border-bottom:2px solid transparent}
+.head nav a:hover,.head nav a.on{color:var(--on-dark);border-bottom-color:var(--gold)}
+.head .where{white-space:nowrap;font-size:.92rem;color:var(--p1);font-weight:600}
+@media (max-width:720px){.head .where{display:none}}
+
+/* Cover */
+.cover{background-color:var(--navy);background-image:linear-gradient(color-mix(in srgb,var(--p1) 9%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--p1) 9%,transparent) 1px,transparent 1px);background-size:56px 56px;color:var(--on-dark);padding-block:40px 0}
+.frame{position:relative;border:1px solid color-mix(in srgb,var(--on-dark) 35%,transparent);background:color-mix(in srgb,var(--sheet) 70%,transparent)}
+.ticks{position:absolute;inset:0;pointer-events:none;color:var(--on-dark-soft)}
+.cover-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:48px;padding:44px 48px 36px}
+@media (max-width:860px){.cover-grid{grid-template-columns:1fr;padding:28px 20px 24px;gap:30px}}
+.tag{display:inline-flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tag span{background:var(--gold);color:#15202b;padding:3px 10px;font-weight:700;font-size:.9rem}
+.tag em{font-style:normal;color:var(--on-dark-soft);font-size:.95rem}
+.cover h1{font-size:clamp(2.9rem,8vw,5.8rem);letter-spacing:-.025em;margin-top:22px;font-weight:800;font-stretch:112%;line-height:.98}
+.cover h1 b{color:var(--p1)}
+.role{font-family:var(--display);font-weight:600;font-size:clamp(1.1rem,2.3vw,1.4rem);margin:14px 0 0;color:var(--on-dark)}
+.role .dot{color:var(--p3);padding-inline:6px}
+.summary{max-width:58ch;margin:22px 0 0;font-size:1.08rem;color:var(--on-dark-soft)}
+.summary b{color:var(--on-dark)}
+.reach{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{font:inherit;font-size:1rem;font-weight:700;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:2px solid currentColor;background:transparent;color:inherit;text-decoration:none;cursor:pointer}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#15202b}
+.btn:hover{filter:brightness(1.08)}
+.cover .btn:not(.gold){color:var(--on-dark)}
+figure{margin:0}
+.portrait{display:grid;gap:10px;align-content:start;max-width:400px;justify-self:end;width:100%}
+@media (max-width:860px){.portrait{justify-self:start;max-width:320px}}
+.portrait .img{position:relative;padding:8px;background:var(--sheet);border:1px solid var(--rule);box-shadow:0 10px 24px rgba(21,60,110,.10)}
+.portrait img{box-shadow:0 0 0 0 transparent;display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.portrait figcaption{font-size:.9rem;color:var(--on-dark-soft)}
+.readout{position:relative;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid color-mix(in srgb,var(--on-dark) 30%,transparent);padding:10px 48px 12px;font-size:.9rem;color:var(--on-dark-soft)}
+@media (max-width:860px){.readout{padding-inline:20px}}
+.readout .num{color:var(--p1);font-weight:600}
+
+/* Cover KPI tiles */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px;transform:translateY(34px)}
+.kpi{padding:18px 18px 16px;display:grid;gap:4px;background:var(--sheet);border:1px solid var(--rule);border-top:4px solid var(--c);box-shadow:0 8px 20px rgba(21,60,110,.08)}
+.kpi strong{color:var(--c)}
+.kpi span{color:var(--soft)}
+.kpi strong{font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1;font-weight:700}
+.kpi span{font-size:.95rem;line-height:1.3;opacity:.95}
+.kpi.k1{--c:var(--p1)}.kpi.k2{--c:var(--p2)}.kpi.k3{--c:var(--p3)}.kpi.k4{--c:var(--p4)}
+@media (max-width:760px){.kpis{grid-template-columns:1fr 1fr}}
+
+/* Sections */
+.sect{padding-block:72px 16px}
+.sect.first{padding-top:96px}
+.sect-title{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.sect-title h2{font-size:clamp(2rem,4.6vw,3rem);position:relative;padding-bottom:10px}
+.sect-title h2::after{content:"";position:absolute;left:0;bottom:0;width:72px;height:4px;background:linear-gradient(90deg,var(--p1) 0 25%,var(--p2) 25% 50%,var(--p3) 50% 75%,var(--p4) 75%)}
+.sect-title p{margin:0;color:var(--soft);max-width:44ch}
+
+/* Project index */
+.index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:36px}
+.index a{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;padding:14px 16px;color:var(--ink);text-decoration:none;background:var(--sheet);border:1px solid var(--rule);border-top:4px solid var(--c)}
+.index a:hover{background:color-mix(in srgb,var(--c) 10%,var(--sheet))}
+.index .pn{grid-row:span 2;font-size:1.9rem;font-weight:700;line-height:1;color:var(--c)}
+.index .pt{font-weight:700;font-size:1rem;line-height:1.25}
+.index .pl{font-size:.9rem;color:var(--soft)}
+@media (max-width:760px){.index{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){.index{grid-template-columns:1fr}}
+
+/* Plates */
+.plate{--c:var(--p1);background:var(--sheet);border:1px solid var(--rule);margin-bottom:36px;scroll-margin-top:76px;box-shadow:0 2px 0 var(--hair)}
+.plate-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;padding:22px 28px;background:color-mix(in srgb,var(--c) 10%,var(--sheet));color:var(--ink);border-top:4px solid var(--c);border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--rule))}
+.roman{font-size:clamp(2.6rem,5vw,3.6rem);line-height:.9;font-weight:700;min-width:1.3em;text-align:center;border:2px solid var(--c);color:var(--c);padding:6px 8px;background:var(--sheet)}
+.plate-head h3{font-size:clamp(1.35rem,2.6vw,1.9rem)}
+.plate-head .place{text-align:right;font-size:.95rem;white-space:nowrap;color:var(--soft)}
+.plate-head .place b{color:var(--ink)}
+.plate-head .place b{display:block;font-size:1.05rem}
+@media (max-width:720px){.plate-head{grid-template-columns:auto minmax(0,1fr);padding:18px}.plate-head .place{grid-column:1/-1;text-align:left;white-space:normal}}
+.stack{display:flex;flex-wrap:wrap;gap:6px;padding:14px 28px;border-bottom:1px solid var(--rule);background:color-mix(in srgb,var(--c) 6%,var(--sheet))}
+.stack span{font-size:.88rem;padding:2px 10px;border:1px solid color-mix(in srgb,var(--c) 45%,var(--rule));color:var(--ink);background:var(--sheet)}
+@media (max-width:720px){.stack{padding:12px 18px}}
+.pkpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:20px 28px 4px}
+.pkpis div{background:color-mix(in srgb,var(--c) 6%,var(--sheet));border:1px solid color-mix(in srgb,var(--c) 22%,var(--rule));padding:14px 14px 12px;display:grid;gap:4px;min-width:0}
+.pkpis strong{font-size:clamp(1.5rem,2.8vw,2.1rem);line-height:1;color:var(--c);font-weight:700}
+.pkpis span{font-size:.9rem;color:var(--soft);line-height:1.3}
+@media (max-width:760px){.pkpis{grid-template-columns:1fr 1fr;padding:16px 18px 4px}}
+.plate-body{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:0}
+@media (max-width:900px){.plate-body{grid-template-columns:1fr}}
+.brief{padding:22px 28px 26px}
+@media (max-width:900px){.brief{padding:18px}}
+.brief dl{margin:0;display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px 18px}
+.brief dt{font-weight:700;color:var(--c)}
+.brief dd{margin:0}
+@media (max-width:520px){.brief dl{grid-template-columns:1fr;gap:2px}.brief dd{margin-bottom:12px}}
+.figs{padding:22px 28px 26px;display:grid;gap:22px;align-content:start;border-left:1px solid var(--rule)}
+@media (max-width:900px){.figs{border-left:0;border-top:1px solid var(--rule);padding:18px}}
+.chart{display:grid;gap:8px}
+.chart h4{font-size:1.02rem}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart svg text{fill:var(--ink);font-family:var(--display)}
+.chart svg .soft{fill:var(--soft)}
+.chart [data-tip]{cursor:default}
+.chart [data-tip]:hover{opacity:.8}
+.chart .note{font-size:.88rem;color:var(--soft)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:.9rem}
+.flow span{padding:4px 10px;background:color-mix(in srgb,var(--c) 10%,var(--sheet));border:1px solid color-mix(in srgb,var(--c) 35%,var(--rule));color:var(--ink);font-weight:600}
+.flow i{color:var(--soft);font-style:normal}
+.inset{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:16px 28px;border-top:1px solid var(--rule);background:color-mix(in srgb,var(--c) 8%,var(--sheet))}
+@media (max-width:900px){.inset{padding:14px 18px}}
+.inset .url{font-size:.9rem;color:var(--soft);overflow-wrap:anywhere;min-width:0}
+.inset .btn{background:var(--c);border-color:var(--c);color:#fff}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--sheet);font-family:var(--display);padding:6px 10px;font-size:.9rem;max-width:260px;line-height:1.35;border-left:3px solid var(--gold)}
+
+/* Skills */
+.kit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.kit{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.kit{grid-template-columns:1fr}}
+.skill{background:var(--sheet);border:1px solid var(--rule);padding:18px;display:grid;gap:10px;align-content:start}
+.skill h3{font-size:1.12rem;display:flex;align-items:center;gap:10px}
+.skill h3 i{width:14px;height:14px;background:var(--c);flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:.9rem;padding:2px 9px;background:color-mix(in srgb,var(--c) 12%,var(--sheet));border:1px solid color-mix(in srgb,var(--c) 30%,var(--sheet))}
+
+/* Record */
+.record{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+@media (max-width:860px){.record{grid-template-columns:1fr}}
+.card{background:var(--sheet);border:1px solid var(--rule);padding:20px 22px}
+.card h3{font-size:1.3rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card h3 i{width:14px;height:14px;background:var(--c);flex:none}
+.entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:12px 0;border-bottom:1px solid var(--hair)}
+.entry:last-child{border-bottom:0}
+.entry .when{color:var(--soft);font-size:.92rem;white-space:nowrap;text-align:right}
+.entry .what{font-weight:700}
+.entry .sub{grid-column:1/-1;color:var(--soft);font-size:.96rem}
+.entry .org{grid-column:1/-1;justify-self:start;font-family:var(--display);font-weight:600;font-size:.95rem;color:var(--p2);background:color-mix(in srgb,var(--p2) 10%,var(--sheet));border:1px solid color-mix(in srgb,var(--p2) 30%,var(--rule));padding:2px 10px}
+.entry a{font-size:.94rem;font-weight:700}
+.medal{display:inline-block;background:var(--gold);color:#15202b;font-weight:700;font-size:.82rem;padding:1px 8px;margin-right:6px}
+
+/* CV */
+.cvbox{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:36px;align-items:start;background:var(--sheet);border:1px solid var(--rule);padding:26px}
+@media (max-width:760px){.cvbox{grid-template-columns:1fr;padding:18px}}
+.cvbox .page{border:1px solid var(--rule);background:#fff;box-shadow:8px 8px 0 color-mix(in srgb,var(--p1) 25%,transparent);max-width:300px}
+.cvbox .page img{display:block;width:100%;height:auto}
+.cvbox p{max-width:56ch;margin:0 0 18px}
+.cvbox .btn{color:var(--ink)}
+.cvbox .btn.gold{color:#15202b}
+.dlnote{font-size:.94rem;color:var(--soft);min-height:1.4em;margin-top:12px}
+
+/* Contact */
+.contact-band{background:var(--navy);color:var(--on-dark);padding-block:56px;margin-top:72px}
+.contact-band h2{font-size:clamp(2.1rem,5.5vw,3.6rem);max-width:20ch}
+.contact-band h2 b{color:var(--p1)}
+.contact-band p.lead{color:var(--on-dark-soft);margin:12px 0 0}
+.rows{margin-top:26px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:720px){.rows{grid-template-columns:1fr}}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:14px 16px;background:var(--navy-2);border:1px solid var(--rule);border-left:4px solid var(--c)}
+.row .k{grid-column:1/-1;font-size:.88rem;color:var(--on-dark-soft);font-weight:700}
+.row .v{overflow-wrap:anywhere;font-size:1.08rem;min-width:0}
+.row .v a{color:var(--p1);font-weight:600}
+.row button{font:600 .9rem var(--display);padding:5px 12px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
+footer{background:var(--navy);color:var(--on-dark-soft);border-top:1px solid var(--rule)}
+footer .wrap{padding-block:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.92rem}
+.scalebar{display:flex;align-items:center}
+.scalebar i{display:block;width:30px;height:8px}
+.scalebar i:nth-child(1){background:var(--p1)}.scalebar i:nth-child(2){background:var(--p2)}.scalebar i:nth-child(3){background:var(--p3)}.scalebar i:nth-child(4){background:var(--p4)}
+
+@media (prefers-reduced-motion:no-preference){
+  .grow{transform-box:fill-box;transform-origin:left center;animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes grow{from{transform:scaleX(.03)}to{transform:none}}
+}
+</style>
+
+</head>
+<body>
+<header class="head">
+  <div class="wrap">
+    <span class="who">Swapnanil Saha</span>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#record">Education</a><a href="#cv">CV</a><a href="#contact">Contact</a>
+    </nav>
+    <span class="where" id="where">Home</span>
+  </div>
+</header>
+
+<main>
+<section class="cover" id="top">
+  <div class="wrap">
+    <div class="frame" id="frame">
+      <svg class="ticks" id="ticks" aria-hidden="true"></svg>
+      <div class="cover-grid">
+        <div>
+          <div class="tag"><span>Open To Full-Time GIS Roles</span><em>Pune, Maharashtra · Willing To Relocate</em></div>
+          <h1>Swapnanil <b>Saha</b></h1>
+          <p class="role">Geospatial Analyst<span class="dot">·</span>GeoAI, Hazard &amp; Utility GIS</p>
+          <p class="summary">I'm an M.Sc. Geoinformatics student at Symbiosis Institute of Geoinformatics, <b>ranked 2nd in my cohort</b>. I build spatial pipelines that end in numbers people can act on: flood and multi-hazard susceptibility maps, DEM and LiDAR terrain analysis, and Python geoprocessing with QA/QC, reaching <b>82 to 92% accuracy</b> across my hazard and land-use models. All <b>four projects</b> below are published as live dashboards.</p>
+          <div class="reach">
+            <a class="btn gold" href="#projects">View Projects</a>
+            <a class="btn" href="#cv">Download CV</a>
+            <a class="btn" href="#contact">Get In Touch</a>
+          </div>
+        </div>
+        <figure class="portrait">
+          <div class="img"><img src="portrait.jpg" alt="Portrait of Swapnanil Saha in a white shirt, smiling" width="600" height="750"></div>
+          <figcaption>M.Sc. Geoinformatics, SIG Pune · Batch 2025–27</figcaption>
+        </figure>
+      </div>
+      <div class="readout">
+        <span>Sheet Extent 18°24′–18°39′ N, 73°42′–74°00′ E</span>
+        <span>Pointer <span class="num" id="coord">18.5204° N, 73.8567° E</span></span>
+        <span>Datum WGS 84</span>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi k1"><strong class="num">4</strong><span>Live Project Dashboards</span></div>
+      <div class="kpi k2"><strong class="num">87.97%</strong><span>Best Model Accuracy (XGBoost, κ 0.819)</span></div>
+      <div class="kpi k3"><strong class="num">9.15</strong><span>SGPA, Semester 2 · Rank 2 In Cohort</span></div>
+      <div class="kpi k4"><strong class="num">16 / 233</strong><span>Finalist Teams, SPARK 2.0 · IEEE GRSS</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sect first" id="projects">
+  <div class="wrap">
+    <div class="sect-title"><h2>Featured Projects</h2></div>
+    <nav class="index" aria-label="Project index">
+      <a href="#p1" style="--c:var(--p1)"><span class="pn">I</span><span class="pt">Predictive Urban Water Stress</span><span class="pl">Bengaluru</span></a>
+      <a href="#p2" style="--c:var(--p2)"><span class="pn">II</span><span class="pt">GLOF Risk Assessment</span><span class="pl">Kargil, Ladakh</span></a>
+      <a href="#p3" style="--c:var(--p3)"><span class="pn">III</span><span class="pt">Gas Pipeline Asset Management</span><span class="pl">Central Houston, Texas</span></a>
+      <a href="#p4" style="--c:var(--p4)"><span class="pn">IV</span><span class="pt">Emergency Service Deserts</span><span class="pl">Hyderabad, Telangana</span></a>
+    </nav>
+
+    <!-- Project I -->
+    <article class="plate" id="p1" data-name="Project I · Water Stress" style="--c:var(--p1)">
+      <div class="plate-head">
+        <span class="roman">I</span>
+        <h3>Predictive Urban Water Stress Mapping &amp; Decentralised Infrastructure Siting</h3>
+        <span class="place"><b>Bengaluru, Karnataka</b>2025 → 2035</span>
+      </div>
+      <div class="stack"><span>Internship Project</span><span>ArcGIS Pro</span><span>Python</span><span>Prophet</span><span>ARIMA</span><span>CA-Markov</span><span>Random Forest</span><span>XGBoost</span><span>K-Means</span><span>Leaflet.js</span><span>TypeScript</span></div>
+      <div class="pkpis">
+        <div><strong class="num">87.97%</strong><span>XGBoost Overall Accuracy</span></div>
+        <div><strong class="num">0.819</strong><span>Kappa Coefficient</span></div>
+        <div><strong class="num">35%</strong><span>Of City In Severe Stress By 2035</span></div>
+        <div><strong class="num">11</strong><span>Geospatial Variables Modelled</span></div>
+      </div>
+      <div class="plate-body">
+        <div class="brief"><dl>
+          <dt>Question</dt><dd>Which parts of Bengaluru will be under severe water stress by 2035, and where should recharge wells, storage tanks and rainwater harvesting go?</dd>
+          <dt>Data</dt><dd><b>11</b> geospatial variables, including rainfall, temperature, land use, groundwater depth, borewells, pumping stations and water pipelines.</dd>
+          <dt>Method</dt><dd>Each driver forecast to 2035 with its own model: rainfall by <b>Prophet</b>, land surface temperature by <b>ARIMA</b>, land use by <b>CA-Markov</b> (<b>92.23%</b> OA) and groundwater depth by <b>OLS</b>. Random Forest and XGBoost then map stress for <b>2025</b> and <b>2035</b>. Sites are allocated by K-Means with <b>K = 3</b>, chosen by Elbow, Silhouette and Davies-Bouldin.</dd>
+          <dt>Result</dt><dd>XGBoost outperformed Random Forest at <b>87.97%</b> overall accuracy and κ <b>0.819</b>, projecting <b>35%</b> of Bengaluru under severe water stress by 2035.</dd>
+        </dl></div>
+        <div class="figs">
+          <div class="chart">
+            <h4>Share Of Bengaluru Under Severe Stress, 2035</h4>
+            <svg viewBox="0 0 400 54" role="img" aria-label="35 percent severe stress, 65 percent other classes">
+              <rect x="0" y="8" width="400" height="24" fill="var(--hair)"></rect>
+              <rect class="grow" x="0" y="8" width="140" height="24" fill="var(--p4)" data-tip="Severe Stress: 35% Of City Area"></rect>
+              <text x="8" y="25" font-size="14" font-weight="700" style="fill:#fff">35%</text>
+              <text x="148" y="25" font-size="13" class="soft">Other Classes 65%</text>
+              <text x="0" y="50" font-size="12" class="soft">0%</text><text x="400" y="50" font-size="12" class="soft" text-anchor="end">100%</text>
+            </svg>
+          </div>
+          <div class="chart">
+            <h4>Model Accuracy (Overall Accuracy, %)</h4>
+            <svg viewBox="0 0 400 82" role="img" aria-label="CA-Markov land use 92.23 percent, XGBoost stress model 87.97 percent">
+              <text x="0" y="14" font-size="13">CA-Markov LULC</text>
+              <rect x="0" y="20" width="360" height="14" fill="var(--hair)"></rect>
+              <rect class="grow" x="0" y="20" width="332" height="14" fill="var(--p1)" data-tip="CA-Markov Land Use: 92.23% OA"></rect>
+              <text x="366" y="32" font-size="12" class="num" font-weight="700">92.23</text>
+              <text x="0" y="54" font-size="13">XGBoost Water Stress</text>
+              <rect x="0" y="60" width="360" height="14" fill="var(--hair)"></rect>
+              <rect class="grow" x="0" y="60" width="316.7" height="14" fill="var(--p2)" data-tip="XGBoost Water Stress: 87.97% OA, κ 0.819"></rect>
+              <text x="366" y="72" font-size="12" class="num" font-weight="700">87.97</text>
+            </svg>
+            <span class="note">Bars Drawn On A 0–100% Scale.</span>
+          </div>
+          <div class="flow" aria-label="Pipeline"><span>11 Variables</span><i>→</i><span>4 Forecasts</span><i>→</i><span>RF · XGBoost</span><i>→</i><span>K = 3 Siting</span></div>
+        </div>
+      </div>
+      <div class="inset"><span class="url">water-stress-dashboard.vercel.app</span><a class="btn" href="https://water-stress-dashboard.vercel.app/" target="_blank" rel="noopener">Open Dashboard ↗</a></div>
+    </article>
+
+    <!-- Project II -->
+    <article class="plate" id="p2" data-name="Project II · GLOF" style="--c:var(--p2)">
+      <div class="plate-head">
+        <span class="roman">II</span>
+        <h3>GLOF Risk Assessment Using Cryospheric &amp; Topographic Indicators With Random Forest</h3>
+        <span class="place"><b>Kargil, Ladakh</b>2000 → 2024</span>
+      </div>
+      <div class="stack"><span>Academic Mini Project</span><span>ArcGIS Pro</span><span>Random Forest</span><span>HTML &amp; CSS</span></div>
+      <div class="pkpis">
+        <div><strong class="num">−24.6%</strong><span>Glacier Area, 2000–2024</span></div>
+        <div><strong class="num">579</strong><span>Glacial Lakes Mapped</span></div>
+        <div><strong class="num">82%</strong><span>Random Forest Overall Accuracy</span></div>
+        <div><strong class="num">0.680</strong><span>Kappa Coefficient</span></div>
+      </div>
+      <div class="plate-body">
+        <div class="brief"><dl>
+          <dt>Question</dt><dd>How fast are Kargil's glaciers retreating, and which areas face glacial lake outburst flood hazard?</dd>
+          <dt>Data</dt><dd><b>11</b> geo-environmental parameters: DEM, slope, aspect, TRI, TWI, MNDWI, NDSI, SWI, land use, glacier extent and glacial lakes.</dd>
+          <dt>Method</dt><dd>Random Forest classification into a GLOF hazard risk map; glacier extent compared between <b>2000</b> and <b>2024</b>; every glacial lake inventoried and typed.</dd>
+          <dt>Result</dt><dd>Hazard map at <b>82%</b> overall accuracy and κ <b>0.680</b>. Glacier area fell from <b>1,049.94 km²</b> to <b>791.72 km²</b>, a loss of 258.22 km² or <b>24.6%</b>. <b>579</b> glacial lakes mapped: periglacial <b>43.7%</b>, proglacial <b>36.8%</b>, supraglacial <b>19.5%</b>.</dd>
+        </dl></div>
+        <div class="figs">
+          <div class="chart">
+            <h4>Glacier Extent (km²)</h4>
+            <svg viewBox="0 0 400 82" role="img" aria-label="Glacier area 1049.94 square kilometres in 2000 and 791.72 in 2024">
+              <text x="0" y="14" font-size="13">2000</text>
+              <rect class="grow" x="0" y="20" width="320" height="16" fill="var(--p1)" data-tip="2000: 1,049.94 km²"></rect>
+              <text x="328" y="33" font-size="12" class="num" font-weight="700">1,049.94</text>
+              <text x="0" y="56" font-size="13">2024</text>
+              <rect class="grow" x="0" y="62" width="241.3" height="16" fill="var(--p2)" data-tip="2024: 791.72 km²"></rect>
+              <rect x="241.3" y="62" width="78.7" height="16" fill="color-mix(in srgb,var(--p4) 18%,transparent)" stroke="var(--p4)" stroke-dasharray="3 3" data-tip="Lost Since 2000: 258.22 km² (24.6%)"></rect>
+              <text x="328" y="75" font-size="12" class="num" font-weight="700">791.72</text>
+            </svg>
+            <span class="note">Red Dashed Box Marks The 258.22 km² Lost. Both Bars Share One Scale.</span>
+          </div>
+          <div class="chart">
+            <h4>579 Glacial Lakes By Type</h4>
+            <svg viewBox="0 0 400 58" role="img" aria-label="Periglacial 43.7, proglacial 36.8, supraglacial 19.5 percent">
+              <rect class="grow" x="0" y="6" width="174.8" height="24" fill="var(--p1)" data-tip="Periglacial: 43.7%"></rect>
+              <rect x="174.8" y="6" width="147.2" height="24" fill="var(--p2)" data-tip="Proglacial: 36.8%"></rect>
+              <rect x="322" y="6" width="78" height="24" fill="var(--gold)" data-tip="Supraglacial: 19.5%"></rect>
+              <text x="0" y="48" font-size="12">Periglacial 43.7%</text>
+              <text x="178" y="48" font-size="12">Proglacial 36.8%</text>
+              <text x="400" y="48" font-size="12" text-anchor="end">Supra 19.5%</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="inset"><span class="url">swapnanilsaha-gis.github.io/GLOF__Dashboard</span><a class="btn" href="https://swapnanilsaha-gis.github.io/GLOF__Dashboard/" target="_blank" rel="noopener">Open Dashboard ↗</a></div>
+    </article>
+
+    <!-- Project III -->
+    <article class="plate" id="p3" data-name="Project III · Gas Assets" style="--c:var(--p3)">
+      <div class="plate-head">
+        <span class="roman">III</span>
+        <h3>GIS-Based Asset Management Dashboard For A Natural Gas Pipeline Utility</h3>
+        <span class="place"><b>Central Houston, Texas</b>967 km Network</span>
+      </div>
+      <div class="stack"><span>Academic Mini Project</span><span>ArcGIS Pro</span><span>ArcGIS Online</span><span>ArcGIS Dashboards</span><span>Hosted Feature Services</span><span>Risk Modelling</span></div>
+      <div class="pkpis">
+        <div><strong class="num">6,214</strong><span>Pipeline Segments, 967 km</span></div>
+        <div><strong class="num">946</strong><span>High / Critical Risk Segments</span></div>
+        <div><strong class="num">$16.3M</strong><span>5-Year Maintenance Cost</span></div>
+        <div><strong class="num">622</strong><span>Leaks Analysed By Cause</span></div>
+      </div>
+      <div class="plate-body">
+        <div class="brief"><dl>
+          <dt>Question</dt><dd>Which pipeline segments should a gas utility inspect and repair first, and what will it cost?</dd>
+          <dt>Data</dt><dd>A <b>12</b>-layer published asset network: <b>6,214</b> pipeline segments over <b>967 km</b> at <b>3</b> pressure levels, plus city gates, storage, metering and pressure-regulating stations, valves, IoT sensors and consumers.</dd>
+          <dt>Method</dt><dd>Risk = PoF × CoF across <b>9</b> weighted factors, ranking a Top-10 priority list. Sensor alerts fire at a pressure drop of <b>≥ 20% / 40%</b> and CH₄ of <b>≥ 2,500 / 5,000 ppm</b>. A <b>3</b>-view dashboard carries <b>6</b> KPIs with filters for <b>5</b> zones, <b>4</b> materials and <b>3</b> network levels.</dd>
+          <dt>Result</dt><dd><b>946</b> segments flagged High or Critical, <b>1,006</b> (16.2%) inspections overdue, a <b>$16.3M</b> five-year maintenance cost, <b>41</b> open maintenance requests driven by sensor alerts, and cause analysis of <b>622</b> leaks.</dd>
+        </dl></div>
+        <div class="figs">
+          <div class="chart">
+            <h4>Of 6,214 Pipeline Segments</h4>
+            <svg viewBox="0 0 400 96" role="img" aria-label="946 high or critical segments, 15.2 percent; 1006 overdue inspections, 16.2 percent">
+              <text x="0" y="14" font-size="13">High / Critical Risk</text>
+              <rect x="0" y="20" width="400" height="14" fill="var(--hair)"></rect>
+              <rect class="grow" x="0" y="20" width="60.9" height="14" fill="var(--p4)" data-tip="946 Of 6,214 Segments = 15.2%"></rect>
+              <text x="68" y="32" font-size="12" class="num" font-weight="700">946 · 15.2%</text>
+              <text x="0" y="56" font-size="13">Overdue Inspection</text>
+              <rect x="0" y="62" width="400" height="14" fill="var(--hair)"></rect>
+              <rect class="grow" x="0" y="62" width="64.8" height="14" fill="var(--p3)" data-tip="1,006 Overdue Inspections = 16.2%"></rect>
+              <text x="72" y="74" font-size="12" class="num" font-weight="700">1,006 · 16.2%</text>
+              <text x="400" y="93" font-size="12" class="soft" text-anchor="end">Full Bar = 6,214 Segments</text>
+            </svg>
+          </div>
+          <div class="chart">
+            <h4>Two-Stage Sensor Alerts</h4>
+            <svg viewBox="0 0 400 74" role="img" aria-label="Pressure drop warning at 20 percent, critical at 40; methane warning at 2500 ppm, critical at 5000">
+              <text x="0" y="15" font-size="13">Pressure Drop</text>
+              <rect x="120" y="4" width="80" height="16" fill="var(--gold)" data-tip="Warning: Pressure Drop ≥ 20%"></rect>
+              <rect x="200" y="4" width="200" height="16" fill="var(--p4)" data-tip="Critical: Pressure Drop ≥ 40%"></rect>
+              <text x="124" y="33" font-size="11" class="num">≥ 20%</text><text x="204" y="33" font-size="11" class="num">≥ 40%</text>
+              <text x="0" y="55" font-size="13">CH₄</text>
+              <rect x="120" y="44" width="80" height="16" fill="var(--gold)" data-tip="Warning: CH₄ ≥ 2,500 ppm"></rect>
+              <rect x="200" y="44" width="200" height="16" fill="var(--p4)" data-tip="Critical: CH₄ ≥ 5,000 ppm"></rect>
+              <text x="124" y="73" font-size="11" class="num">≥ 2,500</text><text x="204" y="73" font-size="11" class="num">≥ 5,000 ppm</text>
+            </svg>
+            <span class="note">Yellow = Warning, Red = Critical. Alerts Drove 41 Open Maintenance Requests.</span>
+          </div>
+        </div>
+      </div>
+      <div class="inset"><span class="url">ArcGIS Dashboards · arcgis.com</span><a class="btn" href="https://www.arcgis.com/apps/dashboards/ae23a5309f5f4d17b23d41f372590773" target="_blank" rel="noopener">Open Dashboard ↗</a></div>
+    </article>
+
+    <!-- Project IV -->
+    <article class="plate" id="p4" data-name="Project IV · Emergency Access" style="--c:var(--p4)">
+      <div class="plate-head">
+        <span class="roman">IV</span>
+        <h3>Mapping Emergency Service Deserts: A Spatial Intelligence Approach To Emergency Accessibility</h3>
+        <span class="place"><b>Hyderabad, Telangana</b>GHMC, 1 km Hex Grid</span>
+      </div>
+      <div class="stack"><span>Academic Mini Project</span><span>ArcGIS Pro</span><span>ArcGIS Online</span><span>Experience Builder</span><span>Network Analysis</span><span>K-Means</span><span>GMM</span></div>
+      <div class="pkpis">
+        <div><strong class="num">15%</strong><span>Of GHMC Flagged As Deserts</span></div>
+        <div><strong class="num">4</strong><span>Accessibility Tiers (K = 4)</span></div>
+        <div><strong class="num">9</strong><span>Indicators Per Hexagon</span></div>
+        <div><strong class="num">12</strong><span>App Pages Published</span></div>
+      </div>
+      <div class="plate-body">
+        <div class="brief"><dl>
+          <dt>Question</dt><dd>Where in Greater Hyderabad are residents farthest from emergency help, once road networks, vulnerability and transit are counted?</dd>
+          <dt>Data</dt><dd>A <b>1 km</b> hexagonal grid over GHMC. Road-network distance to <b>4</b> facility types (hospitals, fire, police, PHCs), <b>2</b> vulnerability indicators (slums, flood points) and <b>3</b> transit modes (bus, metro, railway), from OSM networks and the Hyderabad Metro GTFS feed.</dd>
+          <dt>Method</dt><dd>K-Means with <b>K = 4</b>, validated by Elbow and Silhouette and cross-checked with a Gaussian Mixture Model, sorts every hexagon into <b>4</b> accessibility tiers.</dd>
+          <dt>Result</dt><dd><b>15%</b> of GHMC is a high-priority emergency service desert. Published as a <b>12</b>-page ArcGIS Experience Builder application and a ward-wise web dashboard.</dd>
+        </dl></div>
+        <div class="figs">
+          <div class="chart">
+            <h4>GHMC Area Flagged As Emergency Service Desert</h4>
+            <svg viewBox="0 0 400 54" role="img" aria-label="15 percent of GHMC is a high-priority desert">
+              <rect x="0" y="8" width="400" height="24" fill="var(--hair)"></rect>
+              <rect class="grow" x="0" y="8" width="60" height="24" fill="var(--p4)" data-tip="High-Priority Deserts: 15% Of GHMC"></rect>
+              <text x="68" y="25" font-size="14" class="num" font-weight="700">15%</text>
+              <text x="110" y="25" font-size="13" class="soft">Remaining Three Tiers 85%</text>
+              <text x="0" y="50" font-size="12" class="soft">0%</text><text x="400" y="50" font-size="12" class="soft" text-anchor="end">100%</text>
+            </svg>
+          </div>
+          <div class="chart">
+            <h4>Nine Indicators Per Hexagon</h4>
+            <svg viewBox="0 0 400 66" role="img" aria-label="4 facility types, 2 vulnerability indicators, 3 transit modes">
+              <g data-tip="Facilities: Hospitals, Fire Stations, Police, PHCs">
+                <rect x="0" y="6" width="40" height="28" fill="var(--p4)"></rect><rect x="44" y="6" width="40" height="28" fill="var(--p4)"></rect><rect x="88" y="6" width="40" height="28" fill="var(--p4)"></rect><rect x="132" y="6" width="40" height="28" fill="var(--p4)"></rect>
+              </g>
+              <g data-tip="Vulnerability: Slums, Flood Points">
+                <rect x="186" y="6" width="40" height="28" fill="var(--gold)"></rect><rect x="230" y="6" width="40" height="28" fill="var(--gold)"></rect>
+              </g>
+              <g data-tip="Transit: Bus, Metro, Railway">
+                <rect x="284" y="6" width="34" height="28" fill="var(--p1)"></rect><rect x="322" y="6" width="34" height="28" fill="var(--p1)"></rect><rect x="360" y="6" width="34" height="28" fill="var(--p1)"></rect>
+              </g>
+              <text x="0" y="54" font-size="12">4 Facility Types</text><text x="186" y="54" font-size="12">2 Vulnerability</text><text x="284" y="54" font-size="12">3 Transit Modes</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="inset"><span class="url">swapnanilsaha-gis.github.io/hyderabad-emergency-services-dashboard</span><a class="btn" href="https://swapnanilsaha-gis.github.io/hyderabad-emergency-services-dashboard/" target="_blank" rel="noopener">Open Dashboard ↗</a></div>
+    </article>
+  </div>
+</section>
+
+<section class="sect" id="skills">
+  <div class="wrap">
+    <div class="sect-title"><h2>Skills &amp; Expertise</h2></div>
+    <div class="kit">
+      <div class="skill" style="--c:var(--p1)"><h3><i></i>GIS Platforms</h3><div class="chips"><span>ArcGIS Pro</span><span>ArcGIS Online</span><span>Experience Builder</span><span>ArcGIS Dashboards</span><span>QGIS</span><span>Google Earth Engine</span></div></div>
+      <div class="skill" style="--c:var(--p2)"><h3><i></i>Hazard &amp; Terrain Analysis</h3><div class="chips"><span>Flood Susceptibility</span><span>Multi-Hazard Mapping</span><span>AHP-MCDA</span><span>DEM / DSM / DTM</span><span>LiDAR</span><span>TRI · TWI · Slope · Aspect</span><span>Drainage Density</span></div></div>
+      <div class="skill" style="--c:var(--p3)"><h3><i></i>Raster &amp; Vector Analysis</h3><div class="chips"><span>Raster &amp; Vector Processing</span><span>Spatial Analysis</span><span>LULC &amp; Change Detection</span><span>Kernel Density</span><span>Focal Statistics</span><span>Spatial Joins</span></div></div>
+      <div class="skill" style="--c:var(--p4)"><h3><i></i>Programming &amp; Automation</h3><div class="chips"><span>ArcPy</span><span>GeoPandas</span><span>Pandas</span><span>NumPy</span><span>Scikit-learn</span><span>Random Forest</span><span>XGBoost</span><span>SQL · PostGIS Basics</span></div></div>
+      <div class="skill" style="--c:var(--gold)"><h3><i></i>Data Management &amp; QA/QC</h3><div class="chips"><span>GIS Data QA/QC</span><span>Accuracy Assessment</span><span>Documentation</span><span>Coordinate Reference Systems</span><span>GeoJSON · Shapefile · KML · CSV</span></div></div>
+      <div class="skill" style="--c:var(--soft)"><h3><i></i>Soft Skills</h3><div class="chips"><span>Analytical</span><span>Detail-Oriented</span><span>Collaborative</span><span>Fast Learner</span><span>Written &amp; Spoken English</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="record">
+  <div class="wrap">
+    <div class="sect-title"><h2>Education &amp; Achievements</h2></div>
+    <div class="record">
+      <div class="card" style="--c:var(--p1)">
+        <h3><i></i>Education</h3>
+        <div class="entry"><span class="what">M.Sc. Geoinformatics</span><span class="when num">2025–2027</span><span class="sub">Symbiosis Institute of Geoinformatics, SIU, Pune · SGPA 9.06 (Sem 1), 9.15 (Sem 2) · Rank 2 In Cohort</span></div>
+        <div class="entry"><span class="what">B.Sc. (Honours) Geography</span><span class="when num">2022–2025</span><span class="sub">Vidyasagar Metropolitan College, University Of Calcutta · CGPA 7.44 · Rank 2 In Cohort</span></div>
+        <h3 style="margin-top:22px;--c:var(--p2)"><i></i>Internship Experience</h3>
+        <div class="entry"><span class="what">Geospatial Project Intern</span><span class="when">Jun–Jul 2026</span><span class="org">Department of Civil Engineering, Jadavpur University</span><span class="sub">Built the Python GIS and machine learning pipeline behind Project I and published its Web GIS dashboard.</span></div>
+        <h3 style="margin-top:22px;--c:var(--gold)"><i></i>Achievements</h3>
+        <div class="entry"><span class="what"><span class="medal">Finalist</span>Top 16 Of 233 Teams · SPARK 2.0, IEEE GRSS</span><span class="when"></span><span class="sub"><a href="https://drive.google.com/file/d/1wb59deuVjza4enybyLk2nFB6tn-WEcOV/view?usp=sharing" target="_blank" rel="noopener">View Certificate ↗</a></span></div>
+        <div class="entry"><span class="what"><span class="medal">3rd</span>MAP MANIA 2025–26 · IIARI Kolkata</span><span class="when"></span><span class="sub"><a href="https://drive.google.com/file/d/1d4M0Yddt8qojWlomsSzbqPx8_wxLoCkZ/view?usp=drive_link" target="_blank" rel="noopener">View Certificate ↗</a></span></div>
+        <div class="entry"><span class="what"><span class="medal">Rank 2</span>Semesters 1 &amp; 2 · PG Merit Scholarship</span><span class="when"></span><span class="sub">M.Sc. Geoinformatics, SIG, Pune</span></div>
+      </div>
+      <div class="card" style="--c:var(--p3)">
+        <h3><i></i>Certifications</h3>
+        <div class="entry"><span class="what">Introduction To AI In ArcGIS · Esri</span><span class="when">Jan 2026</span><span class="sub"><a href="https://drive.google.com/file/d/1h3OWEmctU3qV_54kdkUVYu7kX1n5p2KF/view?usp=drive_link" target="_blank" rel="noopener">View Certificate ↗</a></span></div>
+        <div class="entry"><span class="what">Introduction To LiDAR In ArcGIS Pro · Esri</span><span class="when">Jan 2026</span><span class="sub"><a href="https://drive.google.com/file/d/1WJS3Bdeuy2dIZt-SdwsKSNFJsQWCa2gv/view?usp=sharing" target="_blank" rel="noopener">View Certificate ↗</a></span></div>
+        <div class="entry"><span class="what">Coordinate Reference Systems, Projections &amp; Spatial Data Representation · Geo University</span><span class="when">Jan 2026</span><span class="sub"><a href="https://drive.google.com/file/d/1wFDyZfq83TWBLIZzMI4SJ8JoyecQZMxf/view?usp=drive_link" target="_blank" rel="noopener">View Certificate ↗</a></span></div>
+        <div class="entry"><span class="what">Python For Everyone · Esri</span><span class="when">Nov 2025</span><span class="sub"><a href="https://drive.google.com/file/d/1R8Xl6eEs4tmQbA5qate-x9quoJB-O8z4/view?usp=sharing" target="_blank" rel="noopener">View Certificate ↗</a></span></div>
+        <div class="entry"><span class="what">Basics Of JavaScript · Esri</span><span class="when">Oct 2025</span><span class="sub"><a href="https://drive.google.com/file/d/1bgMRrkSYibsRDbniYPLjyod5cPeGI0RY/view?usp=sharing" target="_blank" rel="noopener">View Certificate ↗</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="cv">
+  <div class="wrap">
+    <div class="sect-title"><h2>Curriculum Vitae</h2></div>
+    <div class="cvbox">
+      <figure class="page"><img src="cv.jpg" alt="First page of Swapnanil Saha's resume" width="993" height="1404"></figure>
+      <div>
+        <p>The full resume covers every project on this page plus my complete skills list, education and certificate links, on a single page.</p>
+        <div class="reach" style="margin-top:0">
+          <a class="btn gold" id="dl" href="Swapnanil_Saha_Resume.pdf" download>Download CV</a>
+          <a class="btn" id="openpdf" href="Swapnanil_Saha_Resume.pdf" target="_blank" rel="noopener">Open In New Tab</a>
+        </div>
+        <p class="dlnote" id="dlnote" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-band" id="contact">
+  <div class="wrap">
+    <h2>Have A Map That Needs <b>Answering?</b></h2>
+    <p class="lead">Open to full-time GIS roles across India.</p>
+    <div class="rows">
+      <div class="row" style="--c:var(--p1)"><span class="k">Email</span><span class="v" id="email">swapnanilsaha2@gmail.com</span><button type="button" data-copy="email">Copy</button></div>
+      <div class="row" style="--c:var(--p2)"><span class="k">Phone</span><span class="v num" id="phone">+91 93308 91688</span><button type="button" data-copy="phone">Copy</button></div>
+      <div class="row" style="--c:var(--p3)"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/swapnanilsaha" target="_blank" rel="noopener">linkedin.com/in/swapnanilsaha</a></span><span></span></div>
+      <div class="row" style="--c:var(--p4)"><span class="k">GitHub</span><span class="v"><a href="https://github.com/swapnanilsaha-gis" target="_blank" rel="noopener">github.com/swapnanilsaha-gis</a></span><span></span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Swapnanil Saha · Pune, Maharashtra</span>
+    <span class="scalebar" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span>All Figures As Published In Each Project</span>
+  </div>
+</footer>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(function(){
+  const frame=document.getElementById('frame'), svg=document.getElementById('ticks');
+  function ticks(){
+    const w=frame.clientWidth,h=frame.clientHeight;svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    let s='';const n=Math.max(4,Math.round(w/140));
+    for(let i=1;i<n;i++){const x=w*i/n;s+='<line x1="'+x+'" y1="0" x2="'+x+'" y2="8" stroke="currentColor"/>'}
+    const m=Math.max(3,Math.round(h/140));
+    for(let i=1;i<m;i++){const y=h*i/m;s+='<line x1="0" y1="'+y+'" x2="8" y2="'+y+'" stroke="currentColor"/><line x1="'+w+'" y1="'+y+'" x2="'+(w-8)+'" y2="'+y+'" stroke="currentColor"/>'}
+    svg.innerHTML=s;
+  }
+  ticks();let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(ticks,120)});
+
+  const out=document.getElementById('coord');
+  const N=18.65,S=18.40,W=73.70,E=74.00;
+  function show(cx,cy){
+    const r=frame.getBoundingClientRect();
+    const fx=Math.min(1,Math.max(0,(cx-r.left)/r.width)),fy=Math.min(1,Math.max(0,(cy-r.top)/r.height));
+    out.textContent=(N-(N-S)*fy).toFixed(4)+'° N, '+(W+(E-W)*fx).toFixed(4)+'° E';
+  }
+  frame.addEventListener('pointermove',e=>show(e.clientX,e.clientY));
+  frame.addEventListener('pointerdown',e=>show(e.clientX,e.clientY));
+
+  const tip=document.getElementById('tip');
+  function place(e){
+    const pad=14,tw=tip.offsetWidth,th=tip.offsetHeight;
+    let x=e.clientX+pad,y=e.clientY-th-pad;
+    if(x+tw>innerWidth-8)x=innerWidth-tw-8; if(y<8)y=e.clientY+pad;
+    tip.style.left=x+'px';tip.style.top=y+'px';
+  }
+  document.querySelectorAll('[data-tip]').forEach(el=>{
+    el.addEventListener('pointerenter',e=>{tip.textContent=el.dataset.tip;tip.hidden=false;place(e)});
+    el.addEventListener('pointermove',place);
+    el.addEventListener('pointerleave',()=>tip.hidden=true);
+  });
+  addEventListener('scroll',()=>{tip.hidden=true},{passive:true});
+
+  const where=document.getElementById('where');
+  const navLinks=[...document.querySelectorAll('.head nav a')];
+  const marks=[['top','Home','top'],...[...document.querySelectorAll('.plate')].map(p=>[p.id,p.dataset.name,'projects']),['skills','Skills & Expertise','skills'],['record','Education & Achievements','record'],['cv','Curriculum Vitae','cv'],['contact','Contact','contact']];
+  function onScroll(){
+    let cur=marks[0];
+    for(const m of marks){const el=document.getElementById(m[0]);if(el&&el.getBoundingClientRect().top<130)cur=m}
+    if(cur[0]==='top'){const pr=document.getElementById('projects');if(pr.getBoundingClientRect().top<130)cur=['projects','Featured Projects','projects']}
+    where.textContent=cur[1];
+    navLinks.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur[2]));
+  }
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>{
+    const el=document.getElementById(b.dataset.copy),txt=el.textContent;
+    const sel=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'};
+    try{navigator.clipboard.writeText(txt).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1600)},sel)}catch(_){sel()}
+  }));
+
+})();
+</script>
+
+</body>
+</html>
